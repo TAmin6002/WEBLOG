@@ -1,15 +1,11 @@
 <div align="center">
+📝 Weblog
 
-# 📝 Weblog
+A lightweight multi-user blogging platform — built with Go, Echo & PostgreSQL
 
-**A lightweight multi-user blogging platform** — built with Go, Echo & PostgreSQL
+Show Image Show Image Show Image Show Image
 
-[![Go](https://img.shields.io/badge/Go-1.26-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://go.dev)
-[![Echo](https://img.shields.io/badge/Echo-v4-3E863D?style=for-the-badge&logo=go&logoColor=white)](https://echo.labstack.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-
-[Features](#-features) • [Tech Stack](#-tech-stack) • [Quick Start](#-quick-start) • [Routes](#%EF%B8%8F-routes) • [Live Demo](#-live-demo)
+Features • Tech Stack • Quick Start • Routes • Live Demo
 
 </div>
 
