@@ -191,7 +191,7 @@ Visibility is enforced directly in the SQL query — private content never leaks
 
 ## 🌐 Live Demo
 
-> 🔗 **[https://weblog-production-c9e6.up.railway.app/]**
+> 🔗 **[weblog_app](https://weblog-production-c9e6.up.railway.app/)**
 
 <div align="center">
 
