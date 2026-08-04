@@ -83,7 +83,7 @@ cd WEBLOG
 docker compose up --build
 ```
 
-Open **http://localhost:8080** — the database schema applies automatically on first boot.
+Open **[https://weblog-production-c9e6.up.railway.app/]** — the database schema applies automatically on first boot.
 
 ### Option B — Local Go + Dockerized DB
 
