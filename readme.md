@@ -193,10 +193,6 @@ Visibility is enforced directly in the SQL query — private content never leaks
 
 > 🔗 **[]**
 
-## 📄 License
-
-Built as a course project. Available under the MIT License.
-
 <div align="center">
 
 made with ☕ and Go
