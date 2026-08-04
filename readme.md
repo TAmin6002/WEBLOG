@@ -1,51 +1,204 @@
-# Weblog Application
+<div align="center">
 
-Build a weblog application using Go, Echo, and PostgreSQL. You are free to build this using either Server-Side Rendering (SSR) or as a Single Page Application (SPA) with an API.
+# 📝 Weblog
 
----
+**A lightweight multi-user blogging platform** — built with Go, Echo & PostgreSQL
 
-## 1. Weblog Features
-Each blog post (board) has the following attributes:
-*   **Title**
-*   **Content**
-*   **Image** (optional)
-*   **Author** (the user who created it)
-*   **Privacy Status** (Public or Private)
+[![Go](https://img.shields.io/badge/Go-1.26-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://go.dev)
+[![Echo](https://img.shields.io/badge/Echo-v4-3E863D?style=for-the-badge&logo=go&logoColor=white)](https://echo.labstack.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-### Feed & Detail View
-*   **Home Page:** Displays a list of all blog posts (boards) available to the logged-in user. This includes all public posts, plus any private posts they created or have been granted access to.
-*   **Detail Page (`/weblog/{id}`):** Clicking a preview opens the full blog post, showing the complete text, image, and its comment section.
+[Features](#-features) • [Tech Stack](#-tech-stack) • [Quick Start](#-quick-start) • [Routes](#%EF%B8%8F-routes) • [Live Demo](#-live-demo)
 
-### Ownership
-*   Users can delete only the blog posts they created.
-*   There is **no edit** functionality for blog posts.
+</div>
 
 ---
 
-## 2. User Accounts & Access Control
-*   **Authentication:** Users can sign up and log in using a unique username and a password.
-*   **Post Creation:** Once logged in, a user can create new blog posts.
-*   **Private Sharing:** When creating or managing a private blog, the owner can share it with other users by specifying their usernames. Only the owner and the shared usernames can view this post.
-*   **Permissions:** Only logged-in users can write comments or create new posts.
+## 🚀 Overview
+
+**Weblog** lets anyone sign up, publish posts, and control exactly who sees them. Every post can be **public** or **private** — and private posts can be shared with hand-picked usernames. Comments, ownership rules, and image uploads round out a small but complete blogging experience, all served with clean server-side rendered pages.
 
 ---
 
-## 3. Comments
-*   Logged-in users can write comments on any blog post they have permission to view.
-*   Comments contain only **text** (along with the author's username).
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🔐 Accounts
+- Sign up / log in with a unique username
+- Passwords hashed with **bcrypt**
+- Cookie-based sessions
+
+### 📰 Posts
+- Title, content, optional image
+- Public or private visibility
+- Only the author can delete (no editing, by design)
+
+</td>
+<td width="50%" valign="top">
+
+### 🔒 Private Sharing
+- Share a private post with specific usernames
+- Only the author + shared users can view it
+- Enforced at the database query level
+
+### 💬 Comments
+- Logged-in users only
+- Visible on any post they're allowed to view
+- Text + author username
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 4. Deployment Requirement
-You must deploy your application to a live server and provide the public URL. 
+## 🧱 Tech Stack
 
-You can use free-tier hosting platforms such as:
-*   **Railway**
-*   **Render**
-*   **Fly.io**
+<div align="center">
+
+| Layer | Technology |
+|:---:|:---:|
+| Language | ![Go](https://img.shields.io/badge/-Go%201.26-00ADD8?logo=go&logoColor=white) |
+| Web Framework | ![Echo](https://img.shields.io/badge/-Echo%20v4-3E863D) |
+| Database | ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL%2015-336791?logo=postgresql&logoColor=white) |
+| Rendering | `html/template` (server-side) |
+| Auth | Cookie sessions + bcrypt |
+| Containerization | ![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white) |
+
+</div>
 
 ---
 
-### Submission Requirements
-1. Link to your source code repository.
-2. Link to your live, deployed application.
+## 🚀 Quick Start
+
+### Option A — Docker (recommended)
+
+```bash
+git clone https://github.com/TAmin6002/WEBLOG.git
+cd WEBLOG
+docker compose up --build
+```
+
+Open **http://localhost:8080** — the database schema applies automatically on first boot.
+
+### Option B — Local Go + Dockerized DB
+
+```bash
+docker compose up -d db
+export DB_CONN="postgres://user:password@localhost:5432/weblog_db?sslmode=disable"
+go run .
+```
+
+---
+
+## ⚙️ Configuration
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `DATABASE_URL` | Full Postgres connection string (used by most hosts) | — |
+| `DB_CONN` | Fallback connection string | — |
+| `PORT` | Server port | `8080` |
+
+If neither `DATABASE_URL` nor `DB_CONN` is set:
+```
+postgres://user:password@localhost:5432/weblog_db?sslmode=disable
+```
+
+---
+
+## 📂 Project Structure
+
+```
+weblog/
+.
+├── docker-compose.yml
+├── dockerfile
+├── go.mod
+├── go.sum
+├── handler
+│   ├── auth.go
+│   ├── board.go
+│   └── comment.go
+├── main.go
+├── middleware
+│   └── auth.go
+├── model
+│   ├── board.go
+│   ├── comment.go
+│   └── user.go
+├── readme.md
+├── repo
+│   ├── board_repo.go
+│   ├── comment_repo.go
+│   └── user_repo.go
+├── service
+│   ├── auth_service.go
+│   ├── board_service.go
+│   └── comment_service.go
+├── sql
+│   └── schema.sql
+├── templates
+│   ├── board.html
+│   ├── index.html
+│   ├── login.html
+│   └── signup.html
+
+
+```
+
+---
+
+## 🗺️ Routes
+
+| Method | Path | Description | Auth |
+|:---:|---|---|:---:|
+| `GET` | `/signup` | Signup form | — |
+| `POST` | `/signup` | Create account | — |
+| `GET` | `/login` | Login form | — |
+| `POST` | `/login` | Authenticate | — |
+| `POST` | `/logout` | Log out | 🔒 |
+| `GET` | `/` | Feed of visible posts | 🔒 |
+| `POST` | `/weblog` | Create a new post | 🔒 |
+| `GET` | `/weblog/:id` | View post + comments | 🔒 |
+| `POST` | `/weblog/:id/delete` | Delete your own post | 🔒 |
+| `POST` | `/weblog/:id/comments` | Add a comment | 🔒 |
+
+---
+
+## 🔒 Privacy Model
+
+```
+             ┌───────────────┐
+             │   New Post    │
+             └───────┬───────┘
+                      │
+              is_private?
+              ┌───────┴───────┐
+             No               Yes
+              │                │
+       visible to        visible to:
+       everyone           • author
+                           • shared usernames only
+```
+
+Visibility is enforced directly in the SQL query — private content never leaks into someone else's feed or detail page.
+
+---
+
+## 🌐 Live Demo
+
+> 🔗 **[]**
+
+## 📄 License
+
+Built as a course project. Available under the MIT License.
+
+<div align="center">
+
+made with ☕ and Go
+
+</div>
